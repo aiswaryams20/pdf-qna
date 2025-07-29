@@ -1,16 +1,18 @@
 import requests
 import os
+import streamlit as st
 from dotenv import load_dotenv
 
-# Load variables from .env file
+# Load environment variables from .env for local testing
 load_dotenv()
 
-# Get the API key from .env
-GROQ_API_KEY = os.getenv("GROQ_API_KEY")
-API_URL = "https://api.groq.com/openai/v1/chat/completions"
+# ✅ Securely get the API key (prefer st.secrets, fallback to .env)
+api_key = st.secrets.get("GROQ_API_KEY", os.getenv("GROQ_API_KEY"))
 
+# GROQ API details
+API_URL = "https://api.groq.com/openai/v1/chat/completions"
 HEADERS = {
-    "Authorization": f"Bearer {GROQ_API_KEY}",
+    "Authorization": f"Bearer {api_key}",
     "Content-Type": "application/json"
 }
 
